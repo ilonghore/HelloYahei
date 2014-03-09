@@ -1,0 +1,25 @@
+/* Powered by Longhore!*/
+
+/*避免icon类字体使用雅黑*/
+[class*="iconfont"] {
+	font-family: "iconfont"，"uxiconfont", "iconfont_10", "iconfont_14", "iconfont_60" !important; 
+}
+[class*="el-icon-"] {
+	font-family: 'Elusive-Icons'!important; 
+}
+
+/*优先英文字体优化，其次中文使用雅黑*/
+*{
+  font-family: "FontAwesome", "Segoe UI", "WenQuanYi Micro Hei", "WenQuanYi Micro Hei Mono", "Microsoft Yahei", "Microsoft Yahei Mono"，"微软雅黑" sans-serif !important;
+}
+/*代码/宽体等字体的优化*/
+pre, code, textarea, tt, kbd, samp,
+pre *, code *, textarea *, tt *, kbd *, samp *{
+  font-family: "Segoe UI", monospace !important;
+}
+
+
+
+/* "iconfont" test-url:www.taobao.com */
+/* "el-icon-" test-url:http://shoestrap.org/downloads/elusive-icons-webfont */
+/* "FontAwesome" test-url:http://fontawesome.io */
