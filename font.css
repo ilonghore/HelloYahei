@@ -1,16 +1,64 @@
 /* Powered by Longhore!*/
 
 /*避免icon类字体使用雅黑*/
-[class*="iconfont"] {
-	font-family: "iconfont"，"uxiconfont", "iconfont_10", "iconfont_14", "iconfont_60" !important; 
+
+[class*="g-icon"] {
+	font-family: "global-iconfont"!important; 
 }
+
+[class*="tb-fp-iconfont"] {
+	font-family: "tb-fp-iconfont"!important; 
+}
+
+[class*="tb-toolbar-item-icon"] {
+	font-family: "tb-toolbar-iconfont"!important; 
+}
+
+[class="fp-iconfont"] {
+	font-family: "fp-font"!important; 
+}
+[class="mui-iconfont"] {
+	font-family: "mui-iconfont"!important; 
+}
+
+[class*="uxiconfont"] {
+	font-family: "uxiconfont" !important; 
+}
+[class*="iconfont_"] {
+	font-family: "iconfont_10", "iconfont_14", "iconfont_60" !important; 
+}
+
 [class*="el-icon-"] {
-	font-family: 'Elusive-Icons'!important; 
+	font-family: "Elusive-Icons"!important; 
 }
+
+[class*="ss-social"] {
+	font-family: "SSSocial"!important; 
+}
+[class="ss-icon"] {
+	font-family: "SSSymbolicons"!important; 
+}
+[class="iconfont"] {
+	font-family: "iconfont" !important; 
+}
+[class*="W_ficon"] {
+	font-family: "wbficonregular" !important; 
+}
+[class*="W_swficon"] [class*="spac"] {
+	font-family: "WBswficon" !important; 
+}
+span[class="icon"] {
+	font-family: "sv","topbar" !important; 
+}
+
+/*[class^="icon-", class^="-icon"] {
+	font-family: "collamark" !important; 
+}*/
+
 
 /*优先英文字体优化，其次中文使用雅黑*/
 *{
-  font-family: "FontAwesome", "Segoe UI", "WenQuanYi Micro Hei", "WenQuanYi Micro Hei Mono", "Microsoft Yahei", "Microsoft Yahei Mono"，"微软雅黑" sans-serif !important;
+  font-family:  "fontello", "icomoon", "tmt-icons", "MD_Font", "octicons", "Glyphicons Halflings", "FontAwesome", "dashicons", "iconfont", "Segoe UI", "WenQuanYi Micro Hei", "WenQuanYi Micro Hei Mono", "Microsoft Yahei", "Microsoft Yahei Mono"，"微软雅黑" sans-serif !important;
 }
 /*代码/宽体等字体的优化*/
 pre, code, textarea, tt, kbd, samp,
@@ -20,6 +68,24 @@ pre *, code *, textarea *, tt *, kbd *, samp *{
 
 
 
-/* "iconfont" test-url:www.taobao.com */
+
+/*TEST URLS*/
+/* "fp-iconfont","mui-iconfont","tb-toolbar-iconfont" test-url:http://www.tmall.com */
+/* "MD_Font" test-url:https://www.mingdao.com/myfeed.aspx  需要登录*/
+/* "SSSymbolicons" test-url:https://cloudconvert.org/ */
+/* "octicons" test-url:https://github.com/gabrielecirulli/2048 */
+/* "Glyphicons Halflings" test-url:http://v3.bootcss.com/components */
+/* "iconfont""global-iconfont""tb-fp-iconfont" test-url:www.taobao.com http://www.aliyun.com/product/yundun */
 /* "el-icon-" test-url:http://shoestrap.org/downloads/elusive-icons-webfont */
 /* "FontAwesome" test-url:http://fontawesome.io */
+/* "sv""topbar" test-url:http://hao.360.cn */
+/* "WBswficon""wbficonregular" test-url:http://weibo.com V6版本 */
+/* "tmt-icons" test-url:http://www.tmtpost.com/ */
+/* "icomoon" test-url:http://www.updatestar.com/ */
+/* "tmt-icons" test-url:http://www.tmtpost.com/ */
+/* "fontello" test-url:http://music.douban.com/artists/player/ */
+
+/*TO DO*/
+
+/* "collamark"  test-url:http://collamark.com */
+/* "surly" http://sur.ly/o/263.net/AA001290*/
