@@ -1,11 +1,21 @@
 {
-  "name": "Hello雅黑", 
-  "version": "0.1.0", 
-  "description": "将页面的中文字体替换为更美观的微软雅黑字体，部分英文替换为效果较好的Segoe UI，by longhore", 
-  "manifest_version": 2,
-  "icons": {"128": "icon128.png"},
-  "content_scripts": [ {
-        "css": [ "font.css" ],
-        "matches": [ "http://*/*", "https://*/*" ]
-  } ]
-}  
+  "name": "Hello YaHei",
+  "version": "1.1.0",
+  "description": "It will change Chinese fonts to Microsoft YaHei and others to Segoe UI, without breaking icon fonts. by LongQiang",
+  "manifest_version": 3,
+  "icons": { "128": "icon128.png", "512": "icon512.png" },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "css": ["font.css"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["font-fix.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

@@ -1,91 +1,762 @@
-/* Powered by Longhore!*/
+/* Hello YaHei - font.css
+ *
+ * 架构不变式：绝不覆盖页面显式声明的 font-family。
+ *
+ * 图标字体（IconFont/FontAwesome/iconfont.cn 等）都是页面通过
+ * @font-face src:url() 自行加载的自定义 family 名，只要我们不去覆盖
+ * 元素的 font-family、不去别名这些名字，图标就从机制上不可能损坏。
+ *
+ * 做法分三层：
+ *  1. @font-face 别名区：把常见"正文字体名"在字体解析层映射到本机雅黑，
+ *     unicode-range 限定 CJK 区并排除私有区（PUA，图标码点所在区域）。
+ *     同名 @font-face 组成复合 family，逐字符按定义逆序匹配、缺字形自动
+ *     回落，因此与页面样式表的先后顺序无关，拉丁字形一律不受影响。
+ *  2. 兜底规则：:where() 零优先级、无 !important——任何图标元素都带有
+ *     显式类规则（优先级更高），必然压过它。
+ *  3. 页面用 url() 加载的正文 webfont 由 font-fix.js 在字体层面处理。
+ */
 
-/*避免icon类字体使用雅黑*/
+/* ============================================================
+ * 1. @font-face 别名区
+ *    每个 family 两个块：常规（400）与粗体（700，避免只靠合成加粗）。
+ *    刻意不列：楷体/仿宋（常为刻意排版）、繁体黑体（雅黑繁体覆盖差）、
+ *    等宽字体（代码字体保持原样）、任何 icon/glyph 类名字。
+ * ============================================================ */
 
-[class*="g-icon"] {
-	font-family: "global-iconfont"!important; 
+/* ---- 中文 · Windows ---- */
+
+@font-face {
+  font-family: "SimSun";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "SimSun";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "宋体";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "宋体";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "NSimSun";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "NSimSun";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "新宋体";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "新宋体";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "SimHei";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "SimHei";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "黑体";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "黑体";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "DengXian";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "DengXian";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "等线";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "等线";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
 }
 
-[class*="tb-fp-iconfont"] {
-	font-family: "tb-fp-iconfont"!important; 
+/* ---- 中文 · macOS / iOS ---- */
+
+@font-face {
+  font-family: "PingFang SC";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "PingFang SC";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "PingFang TC";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "PingFang TC";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Hiragino Sans GB";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Hiragino Sans GB";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Heiti SC";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Heiti SC";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "STHeiti";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "STHeiti";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "STXihei";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "STXihei";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "华文细黑";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "华文细黑";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Lantinghei SC";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Lantinghei SC";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
 }
 
-[class*="tb-toolbar-item-icon"] {
-	font-family: "tb-toolbar-iconfont"!important; 
+/* ---- 中文 · Linux / Android / 开源 ---- */
+
+@font-face {
+  font-family: "Noto Sans CJK SC";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Noto Sans CJK SC";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Noto Sans SC";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Noto Sans SC";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Source Han Sans SC";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Source Han Sans SC";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Source Han Sans CN";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Source Han Sans CN";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "思源黑体";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "思源黑体";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "WenQuanYi Micro Hei";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "WenQuanYi Micro Hei";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "文泉驿微米黑";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "文泉驿微米黑";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Droid Sans Fallback";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Droid Sans Fallback";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
 }
 
-[class="fp-iconfont"] {
-	font-family: "fp-font"!important; 
+/* ---- 西文（仅接管其本不存在的 CJK 字形，即把默认中文回退字体换成雅黑） ---- */
+
+@font-face {
+  font-family: "Arial";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
 }
-[class="mui-iconfont"] {
-	font-family: "mui-iconfont"!important; 
+@font-face {
+  font-family: "Arial";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Helvetica";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Helvetica";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Helvetica Neue";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Verdana";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Verdana";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Tahoma";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Tahoma";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Segoe UI";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Segoe UI";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Roboto";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Roboto";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Open Sans";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Open Sans";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Lucida Grande";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Lucida Grande";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Trebuchet MS";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Trebuchet MS";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Georgia";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Georgia";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Times New Roman";
+  src: local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC"), local("Noto Sans CJK SC"), local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
+}
+@font-face {
+  font-family: "Times New Roman";
+  font-weight: bold;
+  src: local("Microsoft YaHei Bold"), local("MicrosoftYaHei-Bold"),
+       local("Microsoft YaHei"), local("MicrosoftYaHei"), local("微软雅黑"),
+       local("PingFang SC Semibold"), local("Noto Sans CJK SC Bold"),
+       local("WenQuanYi Micro Hei");
+  unicode-range: U+2E80-2EFF, U+3000-303F, U+31C0-31EF, U+3200-32FF,
+                 U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF,
+                 U+20000-2A6DF, U+2A700-2CEAF, U+2F800-2FA1F;
 }
 
-[class*="uxiconfont"] {
-	font-family: "uxiconfont" !important; 
-}
-[class*="iconfont_"] {
-	font-family: "iconfont_10", "iconfont_14", "iconfont_60" !important; 
-}
+/* ============================================================
+ * 2. 兜底规则（零优先级，无 !important）
+ *    接管没有任何显式 font-family 的元素。图标元素/伪元素总是通过
+ *    显式类规则取得字体（::before 不匹配通配符，从宿主继承，而宿主的
+ *    图标规则优先级更高），因此不受影响。:not(X *) 额外堵住"图标字体
+ *    设在容器上、字形在无类名子元素里靠继承"的破绽；:not(math) 防止
+ *    作者规则压过 UA 样式表破坏 MathML 公式。
+ * ============================================================ */
 
-[class*="el-icon-"] {
-	font-family: "Elusive-Icons"!important; 
-}
-
-[class*="ss-social"] {
-	font-family: "SSSocial"!important; 
-}
-[class="ss-icon"] {
-	font-family: "SSSymbolicons"!important; 
-}
-[class="iconfont"] {
-	font-family: "iconfont" !important; 
-}
-[class*="W_ficon"] {
-	font-family: "wbficonregular" !important; 
-}
-[class*="W_swficon"] [class*="spac"] {
-	font-family: "WBswficon" !important; 
-}
-span[class="icon"] {
-	font-family: "sv","topbar" !important; 
+:where(:not([class*="icon" i]):not([class*="icon" i] *)
+       :not([class~="fa"]):not([class*="fa-"]):not([class*="fa-"] *)
+       :not([class*="glyph" i]):not(math):not(math *)) {
+  font-family: "Segoe UI", "Microsoft YaHei", "微软雅黑",
+               "PingFang SC", "Noto Sans CJK SC", sans-serif;
 }
 
-/*[class^="icon-", class^="-icon"] {
-	font-family: "collamark" !important; 
-}*/
+/* ============================================================
+ * 3. 等宽恢复区（必须位于兜底规则之后：同为零优先级，靠书写顺序取胜）
+ *    兜底规则会压过 UA 样式表的 pre/code { monospace }，这里补偿回来。
+ *    等宽字体在前；雅黑放在 monospace 关键字前，让代码中的中文注释
+ *    也使用雅黑。站点自己声明的代码字体优先级更高，不受影响。
+ * ============================================================ */
 
-
-/*优先英文字体优化，其次中文使用雅黑*/
-*{
-  font-family:  "fontello", "icomoon", "tmt-icons", "MD_Font", "octicons", "Glyphicons Halflings", "FontAwesome", "dashicons", "iconfont", "Segoe UI", "WenQuanYi Micro Hei", "WenQuanYi Micro Hei Mono", "Microsoft Yahei", "Microsoft Yahei Mono"，"微软雅黑" sans-serif !important;
-}
-/*代码/宽体等字体的优化*/
-pre, code, textarea, tt, kbd, samp,
-pre *, code *, textarea *, tt *, kbd *, samp *{
-  font-family: "Segoe UI", monospace !important;
+:where(pre, code, kbd, samp, tt, xmp, plaintext, listing, textarea),
+:where(pre, code, kbd, samp, tt, xmp, plaintext, listing, textarea) :where(*) {
+  font-family: ui-monospace, Consolas, "Cascadia Mono", Menlo,
+               "Microsoft YaHei", monospace;
 }
 
-
-
-
-/*TEST URLS*/
-/* "fp-iconfont","mui-iconfont","tb-toolbar-iconfont" test-url:http://www.tmall.com */
-/* "MD_Font" test-url:https://www.mingdao.com/myfeed.aspx  需要登录*/
-/* "SSSymbolicons" test-url:https://cloudconvert.org/ */
-/* "octicons" test-url:https://github.com/gabrielecirulli/2048 */
-/* "Glyphicons Halflings" test-url:http://v3.bootcss.com/components */
-/* "iconfont""global-iconfont""tb-fp-iconfont" test-url:www.taobao.com http://www.aliyun.com/product/yundun */
-/* "el-icon-" test-url:http://shoestrap.org/downloads/elusive-icons-webfont */
-/* "FontAwesome" test-url:http://fontawesome.io */
-/* "sv""topbar" test-url:http://hao.360.cn */
-/* "WBswficon""wbficonregular" test-url:http://weibo.com V6版本 */
-/* "tmt-icons" test-url:http://www.tmtpost.com/ */
-/* "icomoon" test-url:http://www.updatestar.com/ */
-/* "tmt-icons" test-url:http://www.tmtpost.com/ */
-/* "fontello" test-url:http://music.douban.com/artists/player/ */
-
-/*TO DO*/
-
-/* "collamark"  test-url:http://collamark.com */
-/* "surly" http://sur.ly/o/263.net/AA001290*/
+/* ============================================================
+ * TEST URLS（回归测试参考）
+ * 图标完整性:
+ *   https://www.iconfont.cn/           任意自定义 family 名的图标
+ *   https://fontawesome.com/icons      FontAwesome
+ *   https://v3.bootcss.com/components/ Glyphicons Halflings
+ *   https://fonts.google.com/icons     连字型 Material Symbols
+ *   https://www.taobao.com/            淘宝系 iconfont
+ *   https://weibo.com/                 微博 W_ficon
+ * 中文替换: https://zh.wikipedia.org/  以及任何 font-family: SimSun 的页面
+ * 不误伤:   GitHub 代码页(等宽)、zh.wikipedia.org 数学公式(MathML)
+ * ============================================================ */
